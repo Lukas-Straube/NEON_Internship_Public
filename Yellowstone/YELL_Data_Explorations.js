@@ -12,7 +12,7 @@ Map.setCenter(-110.51996,44.9198,12)
 Map.addLayer(YELL,{min:1,max:1000, bands:["band53","band35","band19"]},"RGB")
 
 
-var bandRange = function(start, end)
+var bandRange = function(array)
 {
   var start = array[0]
   var end = array[1]
