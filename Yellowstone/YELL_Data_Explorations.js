@@ -20,7 +20,7 @@ var bandRange = function(array)
   var bands = [];
   for (var i = start; i <= end; i++) 
   {
-    bands.push('band' + (i>100 ? '': '') + (i>10 ? '': '') + i);
+    bands.push('band'+ i);
   }
   return bands;
 };
