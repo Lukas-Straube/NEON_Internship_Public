@@ -23,7 +23,7 @@ To start with this tutorial we must first upload a data set. For this one we wil
 ```javascript
 var YELL = ee.Image("users/jadler/asset_20200204025808999");
 ```
-Once uploaded the first thing we want to do is display an RGB image so that we can see what the image looks like.
+Once uploaded the first thing we want to do is display an RGB image so that we can see what the image looks like. To display the image is simply two lines. I go more indepth in the previous tutroial. See [WREF](https://github.com/Lukas-Straube/NEON_Internship_Public/tree/master/Wind%20River%20Experimental%20Forest).
 
 
 
