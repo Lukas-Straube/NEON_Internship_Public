@@ -51,14 +51,18 @@ var falseColor = function()
 ```
 The next we need to combine the images into a single image so that it can be displayed as well as further manipulated. Within the same function a.k.a falsecolor we will combine them using `image.addBands(image)`. This can be seen here:
 ```javascript
-  var falseColor = NIR_Band.addBands(RED_Band)
-  falseColor = falseColor.addBands(GREEN_Band)
+  var falseColorImage = NIR_Band.addBands(RED_Band)
+  falseColorImage = falseColorImage.addBands(GREEN_Band)
 ```
+In the second line we did coding 'trick' in which we are reassigning the variable of `falseColorImage` to itself + the GREEN_Band. It is a little confusing but helps us save lines and makes out code a little bit cleaner.
 
-
-
-
-
+The final step is to create the image parameters and display a new map layer. The newest parameter that we are using is gamma, what it does is change the reletive brightness of each pixel for each band value. We are using three bands and therefore we have three gamma values. In laymans terms the NIR_Band will be a little bit darker while RED and GREEN bands will be a little bit brighter.
+```javascript
+  var vizParams = {min: 1, max: 6000, gamma: [0.95, 1.3, 1.5]}
+  Map.addLayer(falseColor, vizParams,"False Color")
+```
+All thats left is to call the falseColor function by adding `falseColor()` to the end of the file and the image should look like this:
+![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/FalseColor%20YELL.PNG)
 
 
 
