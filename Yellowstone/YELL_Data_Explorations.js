@@ -1,5 +1,29 @@
 var YELL = ee.Image("users/jadler/asset_20200204025808999");
 
+
+Map.setCenter(-110.51996,44.9198,12)
+Map.addLayer(YELL,{min:1,max:1000, bands:["band53","band35","band19"]},"RGB")
+
+
+
+var falseColor = function()
+{
+  var Bands_5 = YELL.select("band96")
+  var Bands_4 = YELL.select("band56")
+  var Bands_3 = YELL.select("band37")
+
+  var falseColor = Bands_5.addBands(Bands_4)
+  falseColor = falseColor.addBands(Bands_3)
+  
+  var vizParams = {min: 1, max: 6000, gamma: [0.95, 1.3, 1.5]}
+  
+  Map.addLayer(falseColor, vizParams,"False Color")
+}
+
+falseColor()
+
+
+
 var LandsatToNIS = 
 {
   "Landsat8_B1":[10,16],"Landsat8_B2":[16,28],"Landsat8_B3":[30,44],
@@ -8,22 +32,26 @@ var LandsatToNIS =
   "Landsat8_B10":-1,"Landsat8_B11":-1
 }
 
-Map.setCenter(-110.51996,44.9198,12)
-Map.addLayer(YELL,{min:1,max:1000, bands:["band53","band35","band19"]},"RGB")
-
 
 var bandRange = function(array)
 {
+  //Take the first index in the array and set it to be start
   var start = array[0]
+  //Take the second index in the array and set it to be start
   var end = array[1]
   
+  //Create an empty array to be returned
   var bands = [];
+  //loop as many times as there are values between start and end
   for (var i = start; i <= end; i++) 
   {
+    //push strings in the form 'band' + i into the array bands
     bands.push('band'+ i);
   }
+  //return the new array to the function that called it
   return bands;
 };
+
 
 
 var NDVI = function()
@@ -49,19 +77,7 @@ var NDVI = function()
   Map.addLayer(NDVI, ndviViz,"NDVI");
 }
 
-var falseColor = function()
-{
-  var Bands_5 = YELL.select("band96")
-  var Bands_4 = YELL.select("band56")
-  var Bands_3 = YELL.select("band37")
 
-  var falseColor = Bands_5.addBands(Bands_4)
-  falseColor = falseColor.addBands(Bands_3)
-  
-  var vizParams = {min: 1, max: 6000, gamma: [0.95, 1.3, 1.5]}
-  
-  Map.addLayer(falseColor, vizParams,"False Color")
-}
 
 NDVI()
-falseColor()
+
