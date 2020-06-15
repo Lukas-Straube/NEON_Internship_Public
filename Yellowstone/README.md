@@ -35,12 +35,25 @@ Once ran in GEE it should look like this
 
 ![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/RGB%20YELL.PNG)
 
+Now we get into the new stuff. 
 
+To display a new image with the intent to make it a false color composite it is important to know that there is an easier way than what I am showing here. However, for the purpose of learning how to use GEE and the tools provided I will take the longer way. This will help us when we want to make an NDVI image and especially when we want to make an EVI image.
 
-
-
-
-
+To start we will need to select the bands of light that make up a false color image. For simplicity sake, given I will be going more indepth later about this, they are bands 96, 56 and 37. 
+Here we have our function decleration as well as the first step, selecting the bands.
+```javascript
+var falseColor = function()
+{
+  var NIR_Band = YELL.select("band96")
+  var RED_Band = YELL.select("band56")
+  var GREEN_Band = YELL.select("band37")
+}
+```
+The next we need to combine the images into a single image so that it can be displayed as well as further manipulated. Within the same function a.k.a falsecolor we will combine them using `image.addBands(image)`. This can be seen here:
+```javascript
+  var falseColor = NIR_Band.addBands(RED_Band)
+  falseColor = falseColor.addBands(GREEN_Band)
+```
 
 
 
