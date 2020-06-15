@@ -62,48 +62,17 @@ var H20MaskOne = function()
 
 var falseColor = function()
 {
-  //select the bands that I want
-  var Bands_5 = YELL.select(bandRange(LandsatToNIS["Landsat5"]))
   var Bands_5S = YELL.select("band96")
-  
-  var Bands_4 = YELL.select(bandRange(LandsatToNIS["Landsat4"]))
-  var Bands_4S = YELL.select("band56")
-  
-  var Bands_3 = YELL.select(bandRange(LandsatToNIS["Landsat3"]))
-  var Bands_3S = YELL.select("band37")
-  
-  
-  //reduce to the mean and rename
-  var Bands_5_Image = Bands_5.reduce(ee.Reducer.mean());
-  Bands_5_Image = Bands_5_Image.rename(["B5"])
-  
-  //reduce to the mean and rename
-  var Bands_4_Image = Bands_4.reduce(ee.Reducer.mean());
-  Bands_4_Image = Bands_4_Image.rename(["B4"])
-  
-  //reduce to the mean and rename
-  var Bands_3_Image = Bands_3.reduce(ee.Reducer.mean());
-  Bands_3_Image = Bands_3_Image.rename(["B3"])
-  
-  //combine into one image
-  var falseColor = Bands_5_Image.addBands(Bands_4_Image)
-  falseColor = falseColor.addBands(Bands_3_Image)
-  
-  //center and zoom
-  Map.centerObject(YELL, 12);
-  
-  //create the vizualzation paramaters
-  var vizParams = {bands:['B5','B4','B3'],min: 1, max: 6000, gamma: [0.95, 1.3, 1.5]}
-  
-  //add the layer to the map
-  Map.addLayer(falseColor, vizParams,"False Color")
-  
+  var Bands_4 = YELL.select("band56")
+  var Bands_3 = YELL.select("band37")
+
   var falseColorS = Bands_5S.addBands(Bands_4S)
   falseColorS = falseColorS.addBands(Bands_3S)
+  
   var vizParamsS = {min: 1, max: 6000, gamma: [0.95, 1.3, 1.5]}
+  
   Map.addLayer(falseColorS, vizParamsS,"False ColorS")
 }
-
 
 H20MaskOne()
 NDVI()
