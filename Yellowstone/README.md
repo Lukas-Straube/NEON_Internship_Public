@@ -25,7 +25,15 @@ var YELL = ee.Image("users/jadler/asset_20200204025808999");
 ```
 Once uploaded the first thing we want to do is display an RGB image so that we can see what the image looks like. To display the image is simply two lines. I go more indepth in the previous tutroial. See [WREF](https://github.com/Lukas-Straube/NEON_Internship_Public/tree/master/Wind%20River%20Experimental%20Forest).
 
+We need to initalize the center of the map in lat and lon. As well as the zoom.
+Then we need to place the image with its parameters and title, all done in one step
+```javascript
+Map.setCenter(-110.51996,44.9198,12)
+Map.addLayer(YELL,{min:1,max:1000, bands:["band53","band35","band19"]},"RGB")
+```
+Once ran in GEE it should look like this
 
+![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/RGB%20YELL.PNG)
 
 
 
