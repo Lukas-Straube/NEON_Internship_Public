@@ -2,10 +2,10 @@ var YELL = ee.Image("users/jadler/asset_20200204025808999");
 
 var LandsatToNIS = 
 {
-  "Landsat1":[10,16],"Landsat2":[16,28],"Landsat3":[30,44],
-  "Landsat4":[52,58],"Landsat5":[94,100],"Landsat6":[237,255],
-  "Landsat7":[345,382],"Landsat8":[24,61],"Landsat9":[197,201],
-  "Landsat10":-1,"Landsat11":-1
+  "Landsat8_B1":[10,16],"Landsat8_B2":[16,28],"Landsat8_B3":[30,44],
+  "Landsat8_B4":[52,58],"Landsat8_B5":[94,100],"Landsat8_B6":[237,255],
+  "Landsat8_B7":[345,382],"Landsat8_B8":[24,61],"Landsat8_B9":[197,201],
+  "Landsat8_B10":-1,"Landsat8_B11":-1
 }
 
 Map.setCenter(-110.51996,44.9198,12)
@@ -29,10 +29,10 @@ var bandRange = function(array)
 var NDVI = function()
 {
   //var R_Bands = YELL.select(bandRange(52,58))
-  var R_Bands = YELL.select(bandRange(LandsatToNIS["Landsat4"]))
+  var R_Bands = YELL.select(bandRange(LandsatToNIS["Landsat8_B4"]))
 
   //var NIR_Bands = YELL.select(bandRange(94,100))
-  var NIR_Bands = YELL.select(bandRange(LandsatToNIS["Landsat5"]))
+  var NIR_Bands = YELL.select(bandRange(LandsatToNIS["Landsat8_B5"]))
   
   var NIR_Image = NIR_Bands.reduce(ee.Reducer.mean());
   NIR_Image = NIR_Image.rename(["NIR"])
@@ -49,17 +49,6 @@ var NDVI = function()
   Map.addLayer(NDVI, ndviViz,"NDVI");
 }
 
-var H20MaskOne = function()
-{
-  var H20_Bands = YELL.select(bandRange([93,95]))
-  
-  var H20_Image = H20_Bands.reduce(ee.Reducer.mean());
-  H20_Image = H20_Image.rename(["H20_Mask_One"])
-  
-  Map.centerObject(YELL, 12);
-  Map.addLayer(H20_Image, {max:6000},"H20_Mask_One")
-}
-
 var falseColor = function()
 {
   var Bands_5 = YELL.select("band96")
@@ -67,13 +56,12 @@ var falseColor = function()
   var Bands_3 = YELL.select("band37")
 
   var falseColor = Bands_5.addBands(Bands_4)
-  falseColor = falseColorS.addBands(Bands_3)
+  falseColor = falseColor.addBands(Bands_3)
   
   var vizParams = {min: 1, max: 6000, gamma: [0.95, 1.3, 1.5]}
   
   Map.addLayer(falseColor, vizParams,"False Color")
 }
 
-H20MaskOne()
 NDVI()
 falseColor()
