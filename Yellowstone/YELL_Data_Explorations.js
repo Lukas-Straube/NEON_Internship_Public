@@ -62,16 +62,16 @@ var H20MaskOne = function()
 
 var falseColor = function()
 {
-  var Bands_5S = YELL.select("band96")
+  var Bands_5 = YELL.select("band96")
   var Bands_4 = YELL.select("band56")
   var Bands_3 = YELL.select("band37")
 
-  var falseColorS = Bands_5S.addBands(Bands_4S)
-  falseColorS = falseColorS.addBands(Bands_3S)
+  var falseColor = Bands_5.addBands(Bands_4)
+  falseColor = falseColorS.addBands(Bands_3)
   
-  var vizParamsS = {min: 1, max: 6000, gamma: [0.95, 1.3, 1.5]}
+  var vizParams = {min: 1, max: 6000, gamma: [0.95, 1.3, 1.5]}
   
-  Map.addLayer(falseColorS, vizParamsS,"False ColorS")
+  Map.addLayer(falseColor, vizParams,"False Color")
 }
 
 H20MaskOne()
