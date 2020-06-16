@@ -141,13 +141,22 @@ The final two steps are to run the NDVI and then display the image as a new map 
 ```javascript
   var NDVI = both_NIR_and_RED.normalizedDifference(["NIR","RED"]);
 ```
-Since an NDVI takes the NIR band and RED band and combines them into a value range of -1 to 1 can use those to create our image visualization. In addition to this min and max we will also be implementing a color palette into our visualization. The palette will be blue, brown and white.
+Since an NDVI takes the NIR band and RED band and combines them into a value range of -1 to 1 can use those to create our image visualization. In addition to this min and max we will also be implementing a color palette into our visualization. The palette will be blue, brown and white. You can use Hex color values or HTML color names
+The colors will correspond to a color ramp which will use the colors to highlight diffrent areas within the image. The algrothim of how a color is chosen for a given pixel is determined by its intensity, the higher the intensity the more likely the right most color will be chosen and visersa. 
+```javascript
+  var vizParams = {min: 1, max: 6000, gamma: [0.95, 1.3, 1.5]};
+  Map.addLayer(falseColor, vizParams,"False Color");
+```
+The final image when calling `NDVI();` should look like this:
 
+![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/NDVI%20YELL.PNG)
 
+---
 
-
-
-
+The most advanced image rendering for this tutorial will be an EVI which requires the following steps:
+- 
+- 
+- 
 
 
 
