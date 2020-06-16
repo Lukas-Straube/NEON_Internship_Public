@@ -17,7 +17,8 @@ Requirements
 ---
 - Access to GEE software (Accounts require an @gmail.com email address)
 - A NEON image to work with (Can be a subset image)
-- An intermediate understanding of JavaScript 
+- An intermediate understanding of JavaScript
+- Familiarity with Landsat8
 
 To start with this tutorial we must first upload a data set. For this one we will be using the Yellowstone Northern Range (Frog Rock). Start by uploading the image.
 ```javascript
@@ -28,10 +29,10 @@ Once uploaded the first thing we want to do is display an RGB image so that we c
 We need to initalize the center of the map in lat and lon. As well as the zoom.
 Then we need to place the image with its parameters and title, all done in one step
 ```javascript
-Map.setCenter(-110.51996,44.9198,12)
-Map.addLayer(YELL,{min:1,max:1000, bands:["band53","band35","band19"]},"RGB")
+Map.setCenter(-110.51996,44.9198,12);
+Map.addLayer(YELL,{min:1,max:1000, bands:["band53","band35","band19"]},"RGB");
 ```
-Once ran in GEE it should look like this
+Once ran in GEE it should look like this:
 
 ![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/RGB%20YELL.PNG)
 
@@ -45,22 +46,22 @@ Here we have our function decleration as well as the first step, selecting the b
 ```javascript
 var falseColor = function()
 {
-  var NIR_Band = YELL.select("band96")
-  var RED_Band = YELL.select("band56")
-  var GREEN_Band = YELL.select("band37")
-}
+  var NIR_Band = YELL.select("band96");
+  var RED_Band = YELL.select("band56");
+  var GREEN_Band = YELL.select("band37");
+};
 ```
-The next we need to combine the images into a single image so that it can be displayed as well as further manipulated. Within the same function a.k.a falsecolor we will combine them using `image.addBands(image)`. This can be seen here:
+The next we need to combine the images into a single image so that it can be displayed as well as further manipulated. Within the same function a.k.a falsecolor we will combine them using `image.addBands(image);`. This can be seen here:
 ```javascript
-  var falseColorImage = NIR_Band.addBands(RED_Band)
-  falseColorImage = falseColorImage.addBands(GREEN_Band)
+  var falseColorImage = NIR_Band.addBands(RED_Band);
+  falseColorImage = falseColorImage.addBands(GREEN_Band);
 ```
 In the second line we did coding 'trick' in which we are reassigning the variable of `falseColorImage` to itself + the GREEN_Band. It is a little confusing but helps us save lines and makes out code a little bit cleaner.
 
 The final step is to create the image parameters and display a new map layer. The newest parameter that we are using is gamma, what it does is change the reletive brightness of each pixel for each band value. We are using three bands and therefore we have three gamma values. In laymans terms the NIR_Band will be a little bit darker while RED and GREEN bands will be a little bit brighter.
 ```javascript
-  var vizParams = {min: 1, max: 6000, gamma: [0.95, 1.3, 1.5]}
-  Map.addLayer(falseColor, vizParams,"False Color")
+  var vizParams = {min: 1, max: 6000, gamma: [0.95, 1.3, 1.5]};
+  Map.addLayer(falseColor, vizParams,"False Color");
 ```
 All thats left is to call the falseColor function by adding `falseColor()` to the end of the file and the image should look like this:
 
@@ -73,9 +74,32 @@ The steps required to accomplish this are as follows:
 - Prefroming and NDVI
 - Displaying the image
 
+The first step is a little bit more complicated than just using `YELL.select("band96");`, since we want to create a an image takes more than just one wavelength. This will give use more acccurate information. To accomplish this we need to delve into the working of GEE's Reducers. 
+These are a group of function and helpers that will allow us to take large quantites of data and compress or reduce it down into more manageable chunks. We will be using `image.reduce(Reducer);` to help us take the mean band values for each pixel and create a new image.
+To help lower the amount of redundent typing I have created a dictonary and helper function which easily converts Landsat8 bands to NIS data which can be used to create more accurate NDVI's. 
+The two parts can be seen here:
+```javascript
+var LandsatToNIS = 
+{
+  "Landsat1":[10,16],"Landsat2":[16,28],"Landsat3":[30,44],
+  "Landsat4":[52,58],"Landsat5":[94,100],"Landsat6":[237,255],
+  "Landsat7":[345,382],"Landsat8":[24,61],"Landsat9":[197,201],
+};
 
-
-
+var bandRange = function(array)
+{
+  var start = array[0];
+  var end = array[1];
+  
+  var bands = [];
+  for (var i = start; i <= end; i++)
+  {
+    bands.push('band'+ i);
+  }
+  return bands;
+};
+```
+Landsat8_10 and 11 are not 
 
 
 
