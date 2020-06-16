@@ -144,8 +144,9 @@ The final two steps are to run the NDVI and then display the image as a new map 
 Since an NDVI takes the NIR band and RED band and combines them into a value range of -1 to 1 can use those to create our image visualization. In addition to this min and max we will also be implementing a color palette into our visualization. The palette will be blue, brown and white. You can use Hex color values or HTML color names
 The colors will correspond to a color ramp which will use the colors to highlight diffrent areas within the image. The algrothim of how a color is chosen for a given pixel is determined by its intensity, the higher the intensity the more likely the right most color will be chosen and visersa. 
 ```javascript
-  var vizParams = {min: 1, max: 6000, gamma: [0.95, 1.3, 1.5]};
-  Map.addLayer(falseColor, vizParams,"False Color");
+  Map.centerObject(YELL, 12);
+  var ndviViz={min:-0.5, max:1,palette:['blue', 'brown', 'white']};
+  Map.addLayer(NDVI, ndviViz,"NDVI");
 ```
 The final image when calling `NDVI();` should look like this:
 
