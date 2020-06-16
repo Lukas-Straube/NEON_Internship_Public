@@ -61,7 +61,7 @@ In the second line we did coding 'trick' in which we are reassigning the variabl
 The final step is to create the image parameters and display a new map layer. The newest parameter that we are using is gamma, what it does is change the reletive brightness of each pixel for each band value. We are using three bands and therefore we have three gamma values. In laymans terms the NIR_Band will be a little bit darker while RED and GREEN bands will be a little bit brighter.
 ```javascript
   var vizParams = {min: 1, max: 6000, gamma: [0.95, 1.3, 1.5]};
-  Map.addLayer(falseColor, vizParams,"False Color");
+  Map.addLayer(falseColorImage, vizParams,"False Color");
 ```
 All thats left is to call the falseColor function by adding `falseColor()` to the end of the file and the image should look like this:
 
