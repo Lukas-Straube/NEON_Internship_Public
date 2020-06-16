@@ -5,16 +5,16 @@ Map.addLayer(YELL,{min:1,max:1000, bands:["band53","band35","band19"]},"RGB");
 
 var falseColor = function()
 {
-  var Bands_5 = YELL.select("band96");
-  var Bands_4 = YELL.select("band56");
-  var Bands_3 = YELL.select("band37");
+  var NIR_Bands = YELL.select("band96");
+  var RED_Bands = YELL.select("band56");
+  var GREEN_Bands = YELL.select("band37");
 
-  var falseColor = Bands_5.addBands(Bands_4);
-  falseColor = falseColor.addBands(Bands_3);
+  var falseColor = NIR_Bands.addBands(RED_Bands);
+  falseColorImage = falseColorImage.addBands(GREEN_Bands);
   
   var vizParams = {min: 1, max: 6000, gamma: [0.95, 1.3, 1.5]};
   
-  Map.addLayer(falseColor, vizParams,"False Color");
+  Map.addLayer(falseColorImage, vizParams,"False Color");
 };
 
 falseColor();
