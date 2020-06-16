@@ -35,6 +35,7 @@ Once ran in GEE it should look like this
 
 ![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/RGB%20YELL.PNG)
 
+---
 Now we get into the new stuff. 
 
 To display a new image with the intent to make it a false color composite it is important to know that there is an easier way than what I am showing here. However, for the purpose of learning how to use GEE and the tools provided I will take the longer way. This will help us when we want to make an NDVI image and especially when we want to make an EVI image.
@@ -62,7 +63,21 @@ The final step is to create the image parameters and display a new map layer. Th
   Map.addLayer(falseColor, vizParams,"False Color")
 ```
 All thats left is to call the falseColor function by adding `falseColor()` to the end of the file and the image should look like this:
+
 ![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/FalseColor%20YELL.PNG)
+
+---
+With the knowledge of how to build an image from multiple images we can move on to a more advanced image resampling technique, creating an NDVI for the entire image. 
+The steps required to accomplish this are as follows:
+- Select the bands that we want
+- Prefroming and NDVI
+- Displaying the image
+
+
+
+
+
+
 
 
 
