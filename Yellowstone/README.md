@@ -133,6 +133,25 @@ The next step is to reduce the images so that we are left with one value for the
   var RED_Image = RED_Bands.reduce(ee.Reducer.mean());
   RED_Image = RED_Image.rename(["RED"]);
 ```
+Now that we have the images with their reduced values we can use the same tactic as above to combine the images.
+```javascript
+  var both_NIR_and_R = NIR_Image.addBands(RED_Image);
+```
+The final two steps are to run the NDVI and then display the image as a new map layer. To run an NDVI is quite simple, since there is a "built in" function that GEE has to create it for us. its called `.normalizedDifference(["first","second"])`. This can all be done in one line and quite simply.
+```javascript
+  var NDVI = both_NIR_and_RED.normalizedDifference(["NIR","RED"]);
+```
+Since an NDVI takes the NIR band and RED band and combines them into a value range of -1 to 1 can use those to create our image visualization. In addition to this min and max we will also be implementing a color palette into our visualization. The palette will be blue, brown and white.
+
+
+
+
+
+
+
+
+
+
 
 
 
