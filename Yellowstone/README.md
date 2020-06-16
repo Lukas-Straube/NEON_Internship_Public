@@ -70,6 +70,7 @@ All thats left is to call the falseColor function by adding `falseColor()` to th
 ---
 With the knowledge of how to build an image from multiple images we can move on to a more advanced image resampling technique, creating an NDVI for the entire image. 
 The steps required to accomplish this are as follows:
+
 - Select the bands that we want
 - Prefroming and NDVI
 - Displaying the image
@@ -81,27 +82,57 @@ The two parts can be seen here:
 ```javascript
 var LandsatToNIS = 
 {
-  "Landsat1":[10,16],"Landsat2":[16,28],"Landsat3":[30,44],
-  "Landsat4":[52,58],"Landsat5":[94,100],"Landsat6":[237,255],
-  "Landsat7":[345,382],"Landsat8":[24,61],"Landsat9":[197,201],
+  "Landsat8_B1":[10,16],"Landsat8_B2":[16,28],"Landsat8_B3":[30,44],
+  "Landsat8_B4":[52,58],"Landsat8_B5":[94,100],"Landsat8_B6":[237,255],
+  "Landsat8_B7":[345,382],"Landsat8_B8":[24,61],"Landsat8_B9":[197,201]
 };
+
+/*
+  The function below is used to take an array of two numbers and return an array with a lenght of the diffrence of 
+  the two numbers passed in. The value that this brings is that it lowers the amount of typing it takes to 
+  select a large amount of bands with in a given range of values. This method is not useful for selected 
+  disparent bands and should not be used to select two individual bands.
+*/
 
 var bandRange = function(array)
 {
+  //Take the first index in the array and set it to be start
   var start = array[0];
+  //Take the second index in the array and set it to be start
   var end = array[1];
   
+  //Create an empty array to be returned
   var bands = [];
-  for (var i = start; i <= end; i++)
+  //loop as many times as there are values between start and end
+  for (var i = start; i <= end; i++) 
   {
+    //push strings in the form 'band' + i into the array bands
     bands.push('band'+ i);
   }
+  //return the new array to the function that called it
   return bands;
 };
 ```
-Landsat8_10 and 11 are not 
+- Landsat8_B10 and B11 are not in the dictonary since the cameras at NEON are not equiped to capture those wavelengths.
 
+So why do we need these two tools. Well, it is so that we avoid having to write and remember the NEON bands that are associated with the more commonly use Landsat8 bands. [More Landsat version dictionaries are here.](www.google.com)
+Now that we have the abality a large amount of bands within a range quickly, we can use that to take the average of the NIR and RED bands to create an NDVI of the Yellowstone data, with Landsat8 bands ranges but NIS bands.
+We start with selecting the images that we want, in this case we want NIS bands that are in the NIR and Red bands for Landsat8 this is done with the dictonary and the helper function.
+```javascript
+var NDVI = function()
+{
+  var RED_Bands = YELL.select(bandRange(LandsatToNIS["Landsat4"]));
+  var NIR_Bands = YELL.select(bandRange(LandsatToNIS["Landsat5"]));
+};
+```
+The next step is to reduce the images so that we are left with one value for the NIR and RED bands. This is done with `image.reduce(ee.Reducer.mean())`. This function provided by GEE creates a new image and names the band to 'mean'. This is not very useful since we lose information, therefore we rename the band in the following line.
+```javascript
+  var NIR_Image = NIR_Bands.reduce(ee.Reducer.mean());
+  NIR_Image = NIR_Image.rename(["NIR"]);
 
+  var RED_Image = RED_Bands.reduce(ee.Reducer.mean());
+  RED_Image = RED_Image.rename(["RED"]);
+```
 
 
 
