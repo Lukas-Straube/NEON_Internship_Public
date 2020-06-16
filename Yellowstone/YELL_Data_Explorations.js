@@ -9,7 +9,7 @@ var falseColor = function()
   var RED_Bands = YELL.select("band56");
   var GREEN_Bands = YELL.select("band37");
 
-  var falseColor = NIR_Bands.addBands(RED_Bands);
+  var falseColorImage = NIR_Bands.addBands(RED_Bands);
   falseColorImage = falseColorImage.addBands(GREEN_Bands);
   
   var vizParams = {min: 1, max: 6000, gamma: [0.95, 1.3, 1.5]};
