@@ -7,6 +7,7 @@ var falseColor = function()
   var RED_Bands = YELL.select("band56");
   var GREEN_Bands = YELL.select("band37");
 
+  
   var falseColorImage = NIR_Bands.addBands(RED_Bands);
   falseColorImage = falseColorImage.addBands(GREEN_Bands);
   
