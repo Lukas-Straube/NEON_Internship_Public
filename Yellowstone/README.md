@@ -134,20 +134,26 @@ The next step is to reduce the images so that we are left with one value for the
   RED_Image = RED_Image.rename(["RED"]);
 ```
 Now that we have the images with their reduced values we can use the same tactic as above to combine the images.
+
 ```javascript
   var both_NIR_and_R = NIR_Image.addBands(RED_Image);
 ```
+
 The final two steps are to run the NDVI and then display the image as a new map layer. To run an NDVI is quite simple, since there is a "built in" function that GEE has to create it for us. its called `.normalizedDifference(["first","second"])`. This can all be done in one line and quite simply.
+
 ```javascript
   var NDVI = both_NIR_and_RED.normalizedDifference(["NIR","RED"]);
 ```
+
 Since an NDVI takes the NIR band and RED band and combines them into a value range of -1 to 1 can use those to create our image visualization. In addition to this min and max we will also be implementing a color palette into our visualization. The palette will be blue, brown and white. You can use Hex color values or HTML color names
 The colors will correspond to a color ramp which will use the colors to highlight diffrent areas within the image. The algrothim of how a color is chosen for a given pixel is determined by its intensity, the higher the intensity the more likely the right most color will be chosen and visersa. 
+
 ```javascript
   Map.centerObject(YELL, 12);
   var ndviViz={min:-0.5, max:1,palette:['blue', 'brown', 'white']};
   Map.addLayer(NDVI, ndviViz,"NDVI");
 ```
+
 The final image when calling `NDVI();` should look like this:
 
 ![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/NDVI%20YELL.PNG)
@@ -156,14 +162,77 @@ The final image when calling `NDVI();` should look like this:
 
 ### The most advanced image rendering for this tutorial will be an EVI which requires the following steps:
 
-- 
-- 
+- Select the bands that we need `Landsat8_B5, B4, and B2` and combining them
+- Create the equation and plug in values
+- Display the image
 
+The first step is quite simple, we have done this four time now. In addition to just the select we will also be taking the mean value of the selected bands as well as renaming them.
 
+```javascript
+  var EVI = function()
+  {
+  //Select the NIR bands that correlate with Landsat8's NIR bands
+  var NIR_Bands = YELL.select(bandRange(LandsatToNIS["Landsat8_B5"]))
+  
+  //Reduce the image so that we take an average of value of the bands
+  var NIR_Image = NIR_Bands.reduce(ee.Reducer.mean());
+  
+  //Rename the band so that it is not "mean"
+  NIR_Image = NIR_Image.rename(["NIR"]);
+  
+  //Select the NIR bands that correlate with Landsat8's RED bands
+  var RED_Bands = YELL.select(bandRange(LandsatToNIS["Landsat8_B4"]))
+  
+  //Reduce the image so that we take an average of value of the bands
+  var RED_Image = RED_Bands.reduce(ee.Reducer.mean());
+  
+  //Rename the band so that it is not "mean"
+  RED_Image = RED_Image.rename(["RED"]);
+  
+  //Select the NIR bands that correlate with Landsat8's BLUE bands
+  var BLUE_Bands = YELL.select(bandRange(LandsatToNIS["Landsat8_B2"]))
+  
+  //Reduce the image so that we take an average of value of the bands
+  var BLUE_Image = BLUE_Bands.reduce(ee.Reducer.mean());
+  
+  //Rename the band so that it is not "mean"
+  BLUE_Image = BLUE_Image.rename(["BLUE"]);
+  
+  //Collect the images into a new image so that it can be processed
+  var imageCombination = BLUE_Image.addBands(RED_Image);
+  imageCombination = imageCombination.addBands(NIR_Image)
+  };
+```
 
+The next step is creating the equation. !Disclaimer! I will be using the coefficients adopted in the MODIS-EVI algorithm. If you prefer to use diffrent EVI coefficients then just tweak the values in the equation.
+Another point that I want to bring into light is that of an EVI scaling, since the data provided is not scaled to the appropriate size we need to multiply the values gotten from the select by a factor of 0.0001.
+```javascript
+  var EVI_Image = imageCombination.expression
+  (
+      'G * ((NIR - RED) / (NIR + C1 * RED - C2 * BLUE + L))', 
+      {
+        'NIR': imageCombination.select('NIR').multiply(0.0001).float(),
+        'RED': imageCombination.select('RED').multiply(0.0001).float(),
+        'BLUE': imageCombination.select('BLUE').multiply(0.0001).float(),
+        'G':2.5,
+        'C1':6.0,
+        'C2':7.5,
+        'L':1.0
+      }
+  );
+```
 
+As you can see above the values of `G, C1, C2, and L` are coefficents that you can change to fit your research.
 
+Finally we want to display the image on the map and call the function `EVI();` and having done this at least 3 times now we just need to follow the same steps. A point to be made is that you can have two diffrent verions, one where you include negetive values and one where you omit them. This can be done by changing min to -1 or 0. The color ramp used is up to you, but I chose a beige to a dark green.
+```javascript
+  Map.centerObject(YELL, 12);
+  Map.addLayer(EVI_Image, {min: -1, max: 1, palette: ['EBDED4', '0A2003']}, "EVI" );
+  //Map.addLayer(EVI_Image, {min: 0, max: 1, palette: ['EBDED4', '0A2003']}, "EVI" );
+```
+The final image should look like this (I kept negetive values in mine)
 
+![alt text]()
 
-
-
+---
+## Thank You
