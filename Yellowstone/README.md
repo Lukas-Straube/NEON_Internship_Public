@@ -232,7 +232,7 @@ Finally we want to display the image on the map and call the function `EVI();` a
 ```
 The final image should look like this (I kept negetive values in mine)
 
-![alt text]()
+![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/YELL%20EVI.PNG)
 
 ---
 ## Thank You
