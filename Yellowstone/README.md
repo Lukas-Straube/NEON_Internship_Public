@@ -18,7 +18,7 @@ Requirements
 - Access to GEE software (Accounts require an @gmail.com email address)
 - A NEON image to work with (Can be a subset image)
 - An intermediate understanding of JavaScript
-- Familiarity with Landsat8
+- Familiarity with Landsat 8
 
 To start with this tutorial we must first upload a data set. For this one we will be using the Yellowstone Northern Range (Frog Rock). Start by uploading the image.
 ```javascript
