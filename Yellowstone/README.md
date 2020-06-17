@@ -121,8 +121,8 @@ We start with selecting the images that we want, in this case we want NIS bands 
 ```javascript
 var NDVI = function()
 {
-  var RED_Bands = YELL.select(bandRange(LandsatToNIS["Landsat4"]));
-  var NIR_Bands = YELL.select(bandRange(LandsatToNIS["Landsat5"]));
+  var RED_Bands = YELL.select(bandRange(LandsatToNIS["Landsat8_B4"]));
+  var NIR_Bands = YELL.select(bandRange(LandsatToNIS["Landsat8_B5"]));
 };
 ```
 The next step is to reduce the images so that we are left with one value for the NIR and RED bands. This is done with `image.reduce(ee.Reducer.mean())`. This function provided by GEE creates a new image and names the band to 'mean'. This is not very useful since we lose information, therefore we rename the band in the following line.
@@ -154,8 +154,8 @@ The final image when calling `NDVI();` should look like this:
 
 ---
 
-The most advanced image rendering for this tutorial will be an EVI which requires the following steps:
-- 
+### The most advanced image rendering for this tutorial will be an EVI which requires the following steps:
+
 - 
 - 
 
