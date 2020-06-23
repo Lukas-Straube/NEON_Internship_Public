@@ -13,4 +13,11 @@ Choose which one you wish to add to your personal assets within GEE. These will 
 
 To add a new GeoTIFF we need 5 things; a source file, an asset id, start and end times as well as any additional properties. On note to make here is that, while you can upload multiple GeoTIFF files together they will all be stitched together and the individual tiles wont be accessable to use. Once complete with all the pervious steps you just need to click upload and it should upto a minute to load the image and create the asset. If you are working with more than 6 GB it can take upwards of 5-10 minutes. 
 
-Uploading a shapefile is the same as loading a GeoTIFF however you need to include all the shape file extensions.
+Uploading a shapefile is the same as loading a GeoTIFF however you need to include all the shape file extensions, except for one `insert shape file extension that should not be included`. 
+
+Lastly to locally create an image collection you just need to select the image link that you want to add to the image collection and then add open the newly created image collection. 
+Seen here:
+
+![alt text](
+![alt text](
+![alt text](
