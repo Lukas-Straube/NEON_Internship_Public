@@ -18,6 +18,18 @@ Uploading a shapefile is the same as loading a GeoTIFF however you need to inclu
 Lastly to locally create an image collection you just need to select the image link that you want to add to the image collection and then add open the newly created image collection. 
 Seen here:
 
-![alt text](
-![alt text](
-![alt text](
+![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/Select_Image_ID.PNG)
+
+---
+
+![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/Naming%20Image%20Collection.PNG)
+
+---
+
+![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/Image%20Collection%20Upload.PNG)
+
+---
+
+![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/Image%20Collection%20Final.PNG)
+
+
