@@ -4,6 +4,7 @@
 To start we need to click over to the assets tab
 
 ![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/Data_Upload.PNG)
+
 Once here we need to click on `NEW` and here you will be prompted to select one of five options.
 
 ![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/Options.PNG)
