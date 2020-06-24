@@ -235,4 +235,36 @@ The final image should look like this (I kept negetive values in mine)
 ![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/YELL%20EVI.PNG)
 
 ---
-## Thank You
+### As a bonus I will cover two additional topics, an NDVI diffrencing as well as a spacial reduction to a region
+
+To reduce an image to be bounded by a shape file or a set of geomerties drawn by you, is quite simple. You just need to add the line `image.clip(geomerty)` when you are diplaying the image. In this example I am using the EVI image and want to bind it to a rectange that I drew.
+```javascript
+  Map.addLayer(EVI_Image.clip(rectangle), {min: -1, max: 1, palette: ['EBDED4', '0A2003']}, "EVI" );
+```
+Where `rectangle` is a geomertry that I drew within GEE and is imported at the top of the code. Since creating the geomerty with code is not really useful since you will be using shape files anywanys there is no point to adding it here.
+
+Finally the NDVI differencing, the process is the same as a normal NDVI however, we need to have two images. They need to be of the same place and at diffrent times. This is where a shape files would be useful since NEON flight paths are usually not the exact same year to year but clipping the image to a specific region is required. Once you have the two NDVI's the process from the first part of the tutorial. We need to do an advanced manuever;
+```javascript
+var NDVI_Change = ndvi1.subtract(ndvi2)
+```
+So now that you have the diffrence you just need to display the diffrence like so;
+```javascript
+Map.addLayer(NDVI_Change, { min:-0.3, max: 0.3, palette: [ 'FFFFFF', '0000FF', 'FF0000']}, "Changes of NDVI  from XXXX to YYYY" );
+```
+Reminder, the images need to be over lapping. You can do this with images that dont overlap however, it'll just be blank.
+
+## Thanks
+
+
+
+
+
+
+
+
+
+
+
+
+
+
