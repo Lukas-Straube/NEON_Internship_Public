@@ -17,8 +17,8 @@ The next few steps will be for people with access to the TERA-OS (Dell PC) and w
 ---
 ### Points of intrest:
 * [Manifest Creation edits](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/GEE_Nightmare/README.md#manifest-creation-edits)
-* XML file
-* Tile Creation
+* [XML file](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/GEE_Nightmare/README.md#xml-file)
+* [Tile Creation](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/GEE_Nightmare/README.md#tile-creation)
 * Google Cloud
 
 #### Manifest Creation Edits
@@ -44,7 +44,10 @@ The second change will come from line 36 where you locate all the files from Goo
  //changed 'uris'
   'uris': [`gs://yell_2018/2018_YELL_3_Band${e}.tif`]
 ``` 
+#### XML File
+There is not much to say about this other than any flights metadata from that site would work regardless of the day. Just make sure the you do not the wrong year. e.g. Yell_2018 was flown over 3 days, any of the days would work, however, 2017 should not be used. 
 
+#### Tile Creation
 
 
 
