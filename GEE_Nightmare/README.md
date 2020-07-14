@@ -12,11 +12,11 @@
 Once you have joined the group you will have access to the AOP repo with in GEE, it is under the asset tab and should read "project/neon"
 This will allow you to have access to any data that we upload to GEE. There will be a more data in the future but for now it will only be 5Tb.
 
-The next few steps will be for people with access to the TERA-OS (Dell PC) and who want to start data transfers for site projects. With everything above the line in the middle of the chart being a one time set up. The creation of the virtual enviroment as well as the installation and updating of the GEE-API
+The next few steps will be for people with access to the TERA-OS (Dell PC) and who want to start data transfers for site projects. With everything above the line in the middle of the chart being a onetime set up. The creation of the virtual environment as well as the installation and updating of the GEE-API
 
 ![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/Uploading%20data%20to%20GEE.png)
 ---
-### Points of intrest:
+### Points of interest:
 ---
 * [Manifest Creation edits](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/GEE_Nightmare/README.md#manifest-creation-edits)
 * [XML file](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/GEE_Nightmare/README.md#xml-file)
@@ -25,7 +25,7 @@ The next few steps will be for people with access to the TERA-OS (Dell PC) and w
 
 #### Manifest Creation Edits
 ---
-These are quite simple to do, within notepad++ when looking at the code created by Austen, youll need to change two things. 
+These are quite simple to do, within notepad++ when looking at the code created by Austen, you’ll need to change two things. 
 First is the name of the asset you want to create.
 ```java
 'name': `projects/earthengine-legacy/assets/projects/neon/TALL_2017/fullsite_TALL_2017`
@@ -36,7 +36,7 @@ The second change will come from line 36 where you locate all the files from Goo
 ```java
  'uris': [`gs://tall_2017/2017_TALL_3_Band${e}.tif`]
  ```
- The only thing that needs to be done first is the tiles to be uploaded to the Google Cloud. Once there you can access the 'image/asset' link by entering the bucket where you uploaded the images and clicking on anyone of them. You will see a table and one of the rows is named URI, that will be the same for all your pictures given you used Tristans band image creator, with the only diffrence being the band number at then end. 
+ The only thing that needs to be done first is the tiles to be uploaded to the Google Cloud. Once there you can access the 'image/asset' link by entering the bucket where you uploaded the images and clicking on anyone of them. You will see a table and one of the rows is named URI, that will be the same for all your pictures given you used Tristan’s band image creator, with the only difference being the band number at the end. 
  Once you have the link you need to just trim it to replace the unique parts of the manifest creation as seen here:
  ```java
  //original
@@ -53,14 +53,14 @@ There is not much to say about this other than any flights metadata from that si
 
 #### Tile Creation
 ---
-This is just to go over the process of creating tiles since it is not really intutive. You'll first need to locate the folder containing the file called `MultipocessCreateGoogleEarthEngineTiles.py`. It will most likely be in the S:\users\jadler\GEcode or the N:\Dept\AOP\... (I cannot access it so thats as far as I can be sure) Once you have located the file you will then need to locate two other things. 
+This is just to go over the process of creating tiles since it is not really intuitive. You'll first need to locate the folder containing the file called `MultipocessCreateGoogleEarthEngineTiles.py`. It will most likely be in the S:\users\jadler\GEcode or the N:\Dept\AOP\... (I cannot access it so that’s as far as I can be sure) Once you have located the file you will then need to locate two other things. 
 
-First being the folder with all the HDF5 or H5 files from the ECS, make sure you are no inside the folder with images, the path must lead to the first folder after selecting the Domain.`e.g you download images from CLBJ 2017, that is in Domain 11. So, you go D:\2017\fullsite\D11\2017_CLBJ_2 not any deeper into the folders` 
+First being the folder with all the HDF5 or H5 files from the ECS, make sure you are no inside the folder with images, the path must lead to the first folder after selecting the Domain.`E.g. you download images from CLBJ 2017, that is in Domain 11. So, you go D:\2017\fullsite\D11\2017_CLBJ_2 not any deeper into the folders` 
 
-Second you need the path to the XML file which you can get from the `Remote_view (no number or words)` L3 -> Site XML. Once you have all three diffrent paths you just execute the script by `cd`-ing into the `MultipocessCreateGoogleEarthEngineTiles.py` location, then exectuing `python MultiprocessCreateGoogleEarthEngineTiles.py "Path to H5 files" "Path to XML metadata file"`!! Important make sure you keep the "" in as that is how the file know what parameters you passed in are !!
+Second you need the path to the XML file which you can get from the `Remote_view (no number or words)` L3 -> Site XML. Once you have all three different paths you just execute the script by `cd`-ing into the `MultipocessCreateGoogleEarthEngineTiles.py` location, then executing `python MultiprocessCreateGoogleEarthEngineTiles.py "Path to H5 files" "Path to XML metadata file"`!! Important make sure you keep the "" in as that is how the file know what parameters you passed in are !!
 
 #### Google Cloud
 ---
-
+At the moment we do not have access to a google cloud account that can be shared by the AOP team. Once that is made this section will be filled out with the steps required to go through image uploading and bucket creation. It is a lot easier than it sounds.
 
 
