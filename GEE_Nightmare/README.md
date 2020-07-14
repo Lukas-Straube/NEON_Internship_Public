@@ -16,7 +16,7 @@ The next few steps will be for people with access to the TERA-OS (Dell PC) and w
 ![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/Uploading%20data%20to%20GEE.png)
 ---
 ### Points of intrest:
-* Manifest Creation edits
+* [Manifest Creation edits](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/GEE_Nightmare/README.md#manifest-creation-edits)
 * XML file
 * Tile Creation
 * Google Cloud
