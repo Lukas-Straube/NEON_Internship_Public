@@ -11,6 +11,6 @@
 Once you have joined the group you will have access to the AOP repo with in GEE, it is under the asset tab and should read "project/neon"
 This will allow you to have access to any data that we upload to GEE. There will be a more data in the future but for now it will only be 5Tb.
 
-The next few steps will be for people with access to the TERA-OS (Dell PC) and who want to start data transfers for site projects. 
+The next few steps will be for people with access to the TERA-OS (Dell PC) and who want to start data transfers for site projects. With everything above the line in the middle of the chart being a one time set up. The creation of the virtual enviroment as well as the installation and updating of the GEE-API
 
 ![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/Uploading%20data%20to%20GEE.png)
