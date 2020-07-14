@@ -14,7 +14,7 @@ This will allow you to have access to any data that we upload to GEE. There will
 
 The next few steps will be for people with access to the TERA-OS (Dell PC) and who want to start data transfers for site projects. With everything above the line in the middle of the chart being a onetime set up. The creation of the virtual environment as well as the installation and updating of the GEE-API
 
-![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/Uploading%20data%20to%20GEE.png)
+![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/Uploading%20data%20to%20GEE%20(1).png)
 ---
 ### Points of interest:
 ---
