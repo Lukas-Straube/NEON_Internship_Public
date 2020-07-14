@@ -14,3 +14,37 @@ This will allow you to have access to any data that we upload to GEE. There will
 The next few steps will be for people with access to the TERA-OS (Dell PC) and who want to start data transfers for site projects. With everything above the line in the middle of the chart being a one time set up. The creation of the virtual enviroment as well as the installation and updating of the GEE-API
 
 ![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/Uploading%20data%20to%20GEE.png)
+---
+### Points of intrest:
+* Manifest Creation edits
+* XML file
+* Tile Creation
+* Google Cloud
+
+#### Manifest Creation Edits
+These are quite simple to do, within notepad++ when looking at the code created by Austen, youll need to change two things. 
+First is the name of the asset you want to create.
+```java
+'name': `projects/earthengine-legacy/assets/projects/neon/TALL_2017/fullsite_TALL_2017`
+```
+You need to keep the ``` 'name': `projects/earthengine-legacy/assets/projects/neon` ``` but you are free to change the subfolder `TALL_2017` and asset name `fullsite_TALL_2017`. Just make sure that the folders you are points to exist within the NEON GEE asset branch. If you want to create a new folder simply click on the red NEW at the top left of the GEE asset page and make sure you change the directory from your personal one to the shared NEON on, then just name the folder whatever you want.
+
+The second change will come from line 36 where you locate all the files from Google Cloud to be uploaded to GEE
+```java
+ 'uris': [`gs://tall_2017/2017_TALL_3_Band${e}.tif`]
+ ```
+ The only thing that needs to be done first is the tiles to be uploaded to the Google Cloud. Once there you can access the 'image/asset' link by entering the bucket where you uploaded the images and clicking on anyone of them. You will see a table and one of the rows is named URI, that will be the same for all your pictures given you used Tristans band image creator, with the only diffrence being the band number at then end. 
+ Once you have the link you need to just trim it to replace the unique parts of the manifest creation as seen here:
+ ```java
+ //original
+ 'uris': [`gs://tall_2017/2017_TALL_3_Band${e}.tif`]
+ 
+ //new images are in a bucket called yell_2018 with the URI of a random image being gs://yell_2018/2018_YELL_3_Band156
+ 
+ //changed 'uris'
+  'uris': [`gs://yell_2018/2018_YELL_3_Band${e}.tif`]
+``` 
+
+
+
+
