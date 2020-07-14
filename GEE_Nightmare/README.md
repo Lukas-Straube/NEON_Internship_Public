@@ -19,7 +19,7 @@ The next few steps will be for people with access to the TERA-OS (Dell PC) and w
 * [Manifest Creation edits](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/GEE_Nightmare/README.md#manifest-creation-edits)
 * [XML file](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/GEE_Nightmare/README.md#xml-file)
 * [Tile Creation](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/GEE_Nightmare/README.md#tile-creation)
-* Google Cloud
+* [Google Cloud](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/GEE_Nightmare/README.md#google-cloud)
 
 #### Manifest Creation Edits
 These are quite simple to do, within notepad++ when looking at the code created by Austen, youll need to change two things. 
@@ -48,45 +48,13 @@ The second change will come from line 36 where you locate all the files from Goo
 There is not much to say about this other than any flights metadata from that site would work regardless of the day. Just make sure the you do not the wrong year. e.g. Yell_2018 was flown over 3 days, any of the days would work, however, 2017 should not be used. 
 
 #### Tile Creation
+This is just to go over the process of creating tiles since it is not really intutive. You'll first need to locate the folder containing the file called `MultipocessCreateGoogleEarthEngineTiles.py`. It will most likely be on the S:\users\jadler\GEcode or the N:\Dept\AOP\... (I cannot access it so thats as far as I can be sure I would assume it is N:\Dept\AOP\users\jadler\GEcode) Once you have located the file you will then need to locate two other things. 
+
+First being the folder with all the HDF5 or H5 files from the ECS, make sure you are no inside the folder with images, the path must lead to the first folder after selecting the Domain.`e.g you download images from CLBJ 2017, that is in Domain 11. So, you go D:\2017\fullsite\D11\2017_CLBJ_2 not any deeper into the folders` 
+
+Second you need the path to the XML file which you can get from the `Remote_view (no number or words)` L3 -> Site XML. Once you have all three diffrent paths you just execute the script by `cd`-ing into the `MultipocessCreateGoogleEarthEngineTiles.py` location, then exectuing `python MultiprocessCreateGoogleEarthEngineTiles.py "Path to H5 files" "Path to XML metadata file"`!! Important make sure you keep the "" in as that is how the file know what parameters you passed in are !!
 
 
 
 
-.
-.
-.
-.
-..
-.
-.
-.
-.
 
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-
-.
-.
-.
-.
-.
-.
-.
-
-.
-.
-.
-.
-.
-.
-.
-.
-.
