@@ -53,11 +53,11 @@ There is not much to say about this other than any flights metadata from that si
 
 #### Tile Creation
 ---
-This is just to go over the process of creating tiles since it is not really intuitive. You'll first need to locate the folder containing the file called `MultipocessCreateGoogleEarthEngineTiles.py`. It will most likely be in the S:\users\jadler\GEcode or the N:\Dept\AOP\... (I cannot access it so that’s as far as I can be sure) Once you have located the file you will then need to locate two other things. 
+This is just to go over the process of creating tiles since it is not really intuitive. You'll first need to locate the folder containing the file called `MultiprocessCreateGoogleEarthEngineTiles.py`. It will most likely be in the S:\users\jadler\GEcode or the N:\Dept\AOP\... (I cannot access it so that’s as far as I can be sure) Once you have located the file you will then need to locate two other things. 
 
 First being the folder with all the HDF5 or H5 files from the ECS, make sure you are no inside the folder with images, the path must lead to the first folder after selecting the Domain.`E.g. you download images from CLBJ 2017, that is in Domain 11. So, you go D:\2017\fullsite\D11\2017_CLBJ_2 not any deeper into the folders` 
 
-Second you need the path to the XML file which you can get from the `Remote_view (no number or words)` L3 -> Site XML. Once you have all three different paths you just execute the script by `cd`-ing into the `MultipocessCreateGoogleEarthEngineTiles.py` location, then executing `python MultiprocessCreateGoogleEarthEngineTiles.py "Path to H5 files" "Path to XML metadata file"`!! Important make sure you keep the "" in as that is how the file know what parameters you passed in are !!
+Second you need the path to the XML file which you can get from the `Remote_view (no number or words)` L3 -> Site XML. Once you have all three different paths you just execute the script by `cd`-ing into the `MultiprocessCreateGoogleEarthEngineTiles.py` location, then executing `python MultiprocessCreateGoogleEarthEngineTiles.py "Path to H5 files" "Path to XML metadata file"`!! Important make sure you keep the "" in as that is how the file know what parameters you passed in are !!
 
 #### Google Cloud
 ---
