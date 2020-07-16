@@ -64,3 +64,13 @@ Second you need the path to the XML file which you can get from the `Remote_view
 At the moment we do not have access to a google cloud account that can be shared by the AOP team. Once that is made this section will be filled out with the steps required to go through image uploading and bucket creation. It is a lot easier than it sounds.
 
 
+For now we are using jadler@battelleecology.org to have access to the google cloud in which we use to store data. 
+
+To create a new bucket, navigate to Resources (Main Page) -> click on Storage -> Top middle left-ish is a button called "Create Bucket"
+* just name the bucket and then click contuine on everything else, the fine details are not a problem for us to worry about
+
+To upload images just enter the bucket and click on "Upload files" in on the left hand side of the screen. This phase will take about 4-5 hours to upload all 426 bands.
+
+
+
+
