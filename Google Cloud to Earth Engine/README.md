@@ -26,19 +26,19 @@ The next few steps will be for people with access to the TERA-OS (Dell PC) and w
 #### Manifest Creation Edits
 ---
 These are quite simple to do, within notepad++ when looking at the code created by Austen, you’ll need to change two things. 
-First is the name of the asset you want to create.
-```java
+First is the name of the asset you want to create. Line 24:
+```JavaScript
 'name': `projects/earthengine-legacy/assets/projects/neon/TALL_2017/fullsite_TALL_2017`
 ```
 You need to keep the ``` 'name': `projects/earthengine-legacy/assets/projects/neon` ``` but you are free to change the subfolder `TALL_2017` and asset name `fullsite_TALL_2017`. Just make sure that the folders you are points to exist within the NEON GEE asset branch. If you want to create a new folder simply click on the red NEW at the top left of the GEE asset page and make sure you change the directory from your personal one to the shared NEON on, then just name the folder whatever you want.
 
 The second change will come from line 36 where you locate all the files from Google Cloud to be uploaded to GEE
-```java
+```JavaScript
  'uris': [`gs://tall_2017/2017_TALL_3_Band${e}.tif`]
  ```
  The only thing that needs to be done first is the tiles to be uploaded to the Google Cloud. Once there you can access the 'image/asset' link by entering the bucket where you uploaded the images and clicking on anyone of them. You will see a table and one of the rows is named URI, that will be the same for all your pictures given you used Tristan’s band image creator, with the only difference being the band number at the end. 
  Once you have the link you need to just trim it to replace the unique parts of the manifest creation as seen here:
- ```java
+ ```JavaScript
  //original
  'uris': [`gs://tall_2017/2017_TALL_3_Band${e}.tif`]
  
@@ -47,6 +47,8 @@ The second change will come from line 36 where you locate all the files from Goo
  //changed 'uris'
   'uris': [`gs://yell_2018/2018_YELL_3_Band${e}.tif`]
 ``` 
+If you choose to upload only a selt range of bands, it can be done by changing the start and end values on lines 5 & 9. It works inclusively so just change it to the band numbers you want to include
+
 #### XML File
 ---
 There is not much to say about this other than any flights metadata from that site would work regardless of the day. Just make sure the you do not the wrong year. e.g. Yell_2018 was flown over 3 days, any of the days would work, however, 2017 should not be used. 
@@ -67,7 +69,7 @@ At the moment we do not have access to a google cloud account that can be shared
 For now we are using jadler@battelleecology.org to have access to the google cloud in which we use to store data. 
 
 To create a new bucket, navigate to Resources (Main Page) -> click on Storage -> Top middle left-ish is a button called "Create Bucket"
-* just name the bucket and then click contuine on everything else, the fine details are not a problem for us to worry about
+* Just name the bucket and then click contuine on everything else, the fine details are not a problem for us to worry about
 
 To upload images just enter the bucket and click on "Upload files" in on the left hand side of the screen. This phase will take about 4-5 hours to upload all 426 bands.
 
