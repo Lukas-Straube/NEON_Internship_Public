@@ -25,7 +25,7 @@ The next few steps will be for people with access to the TERA-OS (Dell PC) and w
 
 #### Manifest Creation Edits
 ---
-Before creating edits make sure that you are using the ManifestCreation.js provided on the Dell TERA-OS, it is stored on D:\GEE_Data_Uploads\ManifestCreation.js
+Before creating edits make sure that you are using the ManifestCreation.js provided on the Dell TERA-OS, it is stored on D:\GEE_Data_Upload_Procedure\ManifestCreation.js
 
 These are quite simple to do, within notepad++ when looking at the code created by Austen, you’ll need to change two things. 
 First is the name of the asset you want to create. Line 24:
