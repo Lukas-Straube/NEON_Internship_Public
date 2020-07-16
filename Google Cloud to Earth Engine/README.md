@@ -25,6 +25,8 @@ The next few steps will be for people with access to the TERA-OS (Dell PC) and w
 
 #### Manifest Creation Edits
 ---
+Before creating edits make sure that you are using the ManifestCreation.js provided on the Dell TERA-OS, it is stored on D:\GEE_Data_Uploads\ManifestCreation.js
+
 These are quite simple to do, within notepad++ when looking at the code created by Austen, you’ll need to change two things. 
 First is the name of the asset you want to create. Line 24:
 ```JavaScript
@@ -47,7 +49,7 @@ The second change will come from line 36 where you locate all the files from Goo
  //changed 'uris'
   'uris': [`gs://yell_2018/2018_YELL_3_Band${e}.tif`]
 ``` 
-If you choose to upload only a selt range of bands, it can be done by changing the start and end values on lines 5 & 9. It works inclusively so just change it to the band numbers you want to include
+If you choose to upload only a selt range of bands, it can be done by changing the start and end values on lines 5 & 9. It works inclusively so just change it to the band numbers you want to include.
 
 #### XML File
 ---
