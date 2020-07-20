@@ -27,7 +27,7 @@ var WREF_171004 = ee.Image("users/jnmusinsky/NIS_Images/171004_subset4");
 ```
 Adding a new layer to the map window is very easy to do. 
 The variables that you see below are:
-  -min, max, bands
+- min, max, bands
 These make up what are called Visualization Parameters that allow you to achieve your desired visual effect. We will assign them to a new variable called visParams.
 ```javascript
 var visParams = {
