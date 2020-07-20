@@ -5,3 +5,9 @@
 
 ## Yellowstone Northern Range (Frog Rock)
 - Is an intermediate view into GEE and NEON
+
+
+
+http://gsp.humboldt.edu/OLM/Courses/GSP_216_Online/lesson3-1/composites.html
+https://bleutner.github.io/RStoolbox/rstbx-docu/spectralIndices.html
+https://developers.google.com/earth-engine/image_manifest#pyramiding-policy
