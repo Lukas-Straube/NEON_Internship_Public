@@ -7,42 +7,40 @@ Lukas Straube
 
 Last Updated: June 15th 2020
 
-Objectives
+## Objectives
 ---
-- Understand intermediate image manipulation
-- Utilize Google Earth Engine's (GEE) image visualation tools
-- Creating your own EVI since GEE does not have a built in function for it
+-	Understand intermediate image manipulation
+-	Utilize Google Earth Engine's (GEE) image visualization tools
+-	Create your own EVI since GEE does not have a built in function for it
 
-Requirements
+## Requirements
 ---
-- Access to GEE software (Accounts require an @gmail.com email address)
-- A NEON image to work with (Can be a subset image)
-- An intermediate understanding of JavaScript
-- Familiarity with Landsat 8
+-	Access to GEE software (accounts require an @gmail.com email address)
+-	A NEON image to work with (can be a subset of an image)
+-	An intermediate understanding of JavaScript
+-	Familiarity with Landsat 8
 
-To start with this tutorial we must first upload a data set. For this one we will be using the Yellowstone Northern Range (Frog Rock). Start by uploading the image.
+To begin this tutorial we must first upload a data set, in this case a mosaic of 2018 spectrometer data from the Yellowstone Northern Range (Frog Rock).
 ```javascript
 var YELL = ee.Image("users/jadler/asset_20200204025808999");
 ```
-Once uploaded the first thing we want to do is display an RGB image so that we can see what the image looks like. To display the image is simply two lines. I go more indepth in the previous tutroial. See [WREF](https://github.com/Lukas-Straube/NEON_Internship_Public/tree/master/Wind%20River%20Experimental%20Forest).
+Once uploaded, the first thing we want to do is display an RGB subset that enables us to see what the entire image looks like. Displaying the image requires two lines of code. (see [WREF](https://github.com/Lukas-Straube/NEON_Internship_Public/tree/master/Wind%20River%20Experimental%20Forest) for a more in-depth discussion).
 
-We need to initalize the center of the map in lat and lon. As well as the zoom.
-Then we need to place the image with its parameters and title, all done in one step
+We also need to specify the center of the map using latitude and longitude coordinates, and an appropriate zoom level that allows the image to fill the screen. We can then display the image in one step by specifying a selection of bands that produce a true color composite parameter, as well as a title (“RGB”). 
 ```javascript
 Map.setCenter(-110.51996,44.9198,12);
 Map.addLayer(YELL,{min:1,max:1000, bands:["band53","band35","band19"]},"RGB");
 ```
-Once ran in GEE it should look like this:
+When we run this code in GEE, the image should look like this:
 
 ![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/RGB%20YELL.PNG)
 
 ---
-Now we get into the new stuff. 
 
-To display a new image with the intent to make it a false color composite it is important to know that there is an easier way than what I am showing here. However, for the purpose of learning how to use GEE and the tools provided I will take the longer way. This will help us when we want to make an NDVI image and especially when we want to make an EVI image.
+Before we display the image as a false color composite, please note that there is an easier method than that shown here. However, for the purpose of practicing with GEE we will demonstrate a slightly more involved process that will help us when we want to create NDVI and EVI images.
 
-To start we will need to select the bands of light that make up a false color image. For simplicity sake, given I will be going more indepth later about this, they are bands 96, 56 and 37. 
-Here we have our function decleration as well as the first step, selecting the bands.
+To start, we create a function that selects the bands corresponding to the wavelengths that are equivalent to those used when generating a false color image from Landsat data. With the NEON spectrometer data, these are bands 96, 56 and 37.
+
 ```javascript
 var falseColor = function()
 {
@@ -51,33 +49,34 @@ var falseColor = function()
   var GREEN_Band = YELL.select("band37");
 };
 ```
-The next we need to combine the images into a single image so that it can be displayed as well as further manipulated. Within the same function a.k.a falsecolor we will combine them using `image.addBands(image);`. This can be seen here:
+Next we need to combine the bands into a single image so that they can be displayed as well as further manipulated. Within the same falseColor function we will combine them using `image.addBands(image);`. This can be seen here:
 ```javascript
   var falseColorImage = NIR_Band.addBands(RED_Band);
   falseColorImage = falseColorImage.addBands(GREEN_Band);
 ```
-In the second line we did coding 'trick' in which we are reassigning the variable of `falseColorImage` to itself + the GREEN_Band. It is a little confusing but helps us save lines and makes out code a little bit cleaner.
+In the second line we did a coding 'trick' in which we are reassigning the variable of falseColorImage to itself plus the GREEN_Band. It is a little confusing, but helps us save lines and makes the code a little cleaner.
 
-The final step is to create the image parameters and display a new map layer. The newest parameter that we are using is gamma, what it does is change the reletive brightness of each pixel for each band value. We are using three bands and therefore we have three gamma values. In laymans terms the NIR_Band will be a little bit darker while RED and GREEN bands will be a little bit brighter.
+The final step is to create the image parameters and display a new map layer. The newest parameter that we are using is gamma. This changes the relative brightness of each pixel for each band value. We are using three bands and therefore have three gamma values. In lay terms, the NIR_Band will be a little bit darker while the RED and GREEN bands will be a little bit brighter.
+
 ```javascript
   var vizParams = {min: 1, max: 6000, gamma: [0.95, 1.3, 1.5]};
   Map.addLayer(falseColorImage, vizParams,"False Color");
 ```
-All thats left is to call the falseColor function by adding `falseColor()` to the end of the file and the image should look like this:
+All that’s left is to call the falseColor function by adding falseColor() to the end of the script, and when we run it the image should look like this:
 
 ![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/FalseColor%20YELL.PNG)
 
 ---
-With the knowledge of how to build an image from multiple images we can move on to a more advanced image resampling technique, creating an NDVI for the entire image. 
-The steps required to accomplish this are as follows:
+Using the knowledge of how to build an image from multiple images we can move on to a more advanced image resampling technique, creating a Normalized Difference Vegetation Index (NDVI) for the entire image. The steps required to accomplish this are as follows:
 
 - Select the bands that we want
-- Prefroming and NDVI
+- Calculate and NDVI
 - Displaying the image
 
-The first step is a little bit more complicated than just using `YELL.select("band96");`, since we want to create a an image takes more than just one wavelength. This will give use more acccurate information. To accomplish this we need to delve into the working of GEE's Reducers. 
-These are a group of function and helpers that will allow us to take large quantites of data and compress or reduce it down into more manageable chunks. We will be using `image.reduce(Reducer);` to help us take the mean band values for each pixel and create a new image.
-To help lower the amount of redundent typing I have created a dictonary and helper function which easily converts Landsat8 bands to NIS data which can be used to create more accurate NDVI's. 
+The first step is a little bit more complicated than just using YELL.select("band96");, since we want to create a an image whose components are derived from more than just one wavelength, matching the wavelengths covered by the spectral bands used in a Landsat 8 NDVI. To accomplish this, we need to delve into the working of GEE's Reducers. These are a group of functions and helpers that allow us to take large quantities of data and compress or reduce them down into more manageable chunks. 
+
+We will be using image.reduce(Reducer); to take the mean band values for each pixel from a range of spectrometer bands that correspond to Landsat bands 4 (red) and 5 (near-IR). To limit the amount of redundant typing required, we create a dictionary and helper function to convert the spectrometer data into an accurate NDVI. 
+
 The two parts can be seen here:
 ```javascript
 var LandsatToNIS = 
@@ -113,11 +112,10 @@ var bandRange = function(array)
   return bands;
 };
 ```
-- Landsat8_B10 and B11 are not in the dictonary since the cameras at NEON are not equiped to capture those wavelengths.
+- Landsat 8_B10 and B11 are not in the dictionary since NEON’s hyperspectral imager is not designed to capture those thermal wavelengths.
 
-So why do we need these two tools. Well, it is so that we avoid having to write and remember the NEON bands that are associated with the more commonly use Landsat8 bands. [More Landsat version dictionaries are here.](www.google.com)
-Now that we have the abality a large amount of bands within a range quickly, we can use that to take the average of the NIR and RED bands to create an NDVI of the Yellowstone data, with Landsat8 bands ranges but NIS bands.
-We start with selecting the images that we want, in this case we want NIS bands that are in the NIR and Red bands for Landsat8 this is done with the dictonary and the helper function.
+Why do we need these two tools? It is to avoid having to write and remember the NEON hyperspectral bands that are associated with the more commonly used multispectral Landsat 8 bands. (More Landsat version dictionaries are found here.) Now that we have the ability to select a large number of bands within a range quickly, we can take the average of the NIR and RED bands to create an NDVI of the Yellowstone data, substituting the Landsat 8 bands ranges with the corresponding NIS bands. We start by selecting the NIS bands that correspond to the NIR and Red bands in Landsat 8 using the dictionary and the helper function.
+
 ```javascript
 var NDVI = function()
 {
@@ -125,7 +123,7 @@ var NDVI = function()
   var NIR_Bands = YELL.select(bandRange(LandsatToNIS["Landsat8_B5"]));
 };
 ```
-The next step is to reduce the images so that we are left with one value for the NIR and RED bands. This is done with `image.reduce(ee.Reducer.mean())`. This function provided by GEE creates a new image and names the band to 'mean'. This is not very useful since we lose information, therefore we rename the band in the following line.
+The next step is to reduce the bands so that we are left with one value for the NIR and RED bands. This is done with `image.reduce(ee.Reducer.mean())`. This function, provided by GEE, creates a new single-band image and renames it to 'mean'. This is not very useful since we lose information, therefore we rename the band in the following line.
 ```javascript
   var NIR_Image = NIR_Bands.reduce(ee.Reducer.mean());
   NIR_Image = NIR_Image.rename(["NIR"]);
@@ -133,20 +131,19 @@ The next step is to reduce the images so that we are left with one value for the
   var RED_Image = RED_Bands.reduce(ee.Reducer.mean());
   RED_Image = RED_Image.rename(["RED"]);
 ```
-Now that we have the images with their reduced values we can use the same tactic as above to combine the images.
+Now that we have the images with their reduced values, we can use the same tactic as above to combine the images.
 
 ```javascript
   var both_NIR_and_R = NIR_Image.addBands(RED_Image);
 ```
 
-The final two steps are to run the NDVI and then display the image as a new map layer. To run an NDVI is quite simple, since there is a "built in" function that GEE has to create it for us. its called `.normalizedDifference(["first","second"])`. This can all be done in one line and quite simply.
+The final two steps are to run the NDVI and then display the image as a new map layer. To run an NDVI is quite simple, since there is a "built in" function that GEE has to create it for us it’s called: `normalizedDifference(["first","second"])`. This can all be done in one line and quite simply.
 
 ```javascript
   var NDVI = both_NIR_and_RED.normalizedDifference(["NIR","RED"]);
 ```
 
-Since an NDVI takes the NIR band and RED band and combines them into a value range of -1 to 1 can use those to create our image visualization. In addition to this min and max we will also be implementing a color palette into our visualization. The palette will be blue, brown and white. You can use Hex color values or HTML color names
-The colors will correspond to a color ramp which will use the colors to highlight diffrent areas within the image. The algrothim of how a color is chosen for a given pixel is determined by its intensity, the higher the intensity the more likely the right most color will be chosen and visersa. 
+Since an NDVI takes the NIR band and RED band and combines them into a value range of -1 to 1 can use those to create our image visualization. In addition to this min and max we will also be implementing a color palette into our visualization. The palette will be blue, brown and white. You can use Hex color values or HTML color names the colors will correspond to a color ramp which will use the colors to highlight different areas within the image. The algorithm of how a color is chosen for a given pixel is determined by its intensity, the higher the intensity the more likely the right most color will be chosen and viscera.
 
 ```javascript
   Map.centerObject(YELL, 12);
@@ -162,12 +159,11 @@ The final image when calling `NDVI();` should look like this:
 
 ### The most advanced image rendering for this tutorial will be an EVI which requires the following steps:
 
-- Select the bands that we need `Landsat8_B5, B4, and B2` and combining them
-- Create the equation and plug in values
-- Display the image
+-	Select and combine the bands that we need corresponding to Landsat 8: B5, B4, and B2 
+-	Create the equation and plug in values
+-	Display the image
 
-The first step is quite simple, we have done this four time now. In addition to just the select we will also be taking the mean value of the selected bands as well as renaming them.
-
+The first step is quite simple; we have done this four times now. In addition to selecting bands we will be taking the mean value of the selected bands and renaming them.
 ```javascript
   var EVI = function()
   {
@@ -203,9 +199,7 @@ The first step is quite simple, we have done this four time now. In addition to 
   imageCombination = imageCombination.addBands(NIR_Image)
   };
 ```
-
-The next step is creating the equation. !Disclaimer! I will be using the coefficients adopted in the MODIS-EVI algorithm. If you prefer to use diffrent EVI coefficients then just tweak the values in the equation.
-Another point that I want to bring into light is that of an EVI scaling, since the data provided is not scaled to the appropriate size we need to multiply the values gotten from the select by a factor of 0.0001.
+The next step is creating the equation. !Disclaimer! I will be using the coefficients adopted in the MODIS-EVI algorithm. If you prefer to use different EVI coefficients then just tweak the values in the equation. Another point is that of EVI scaling: since the data provided is not scaled to the appropriate size we need to multiply the resulting values by a factor of 0.0001. This is because the values inside the image are too large to be used by the equation below, so hence a scaling factor is needed.
 ```javascript
   var EVI_Image = imageCombination.expression
   (
@@ -222,15 +216,16 @@ Another point that I want to bring into light is that of an EVI scaling, since t
   );
 ```
 
-As you can see above the values of `G, C1, C2, and L` are coefficents that you can change to fit your research.
+As you can see above, the values of `G, C1, C2, and L` are coefficients that you can change to fit your research needs.
 
-Finally we want to display the image on the map and call the function `EVI();` and having done this at least 3 times now we just need to follow the same steps. A point to be made is that you can have two diffrent verions, one where you include negetive values and one where you omit them. This can be done by changing min to -1 or 0. The color ramp used is up to you, but I chose a beige to a dark green.
+Finally, we want to display the image on the map and call the function EVI(); and having done this at least 3 times now we just need to follow the same steps. A point to note is that you can have two different versions, one where you include negative values and one where you omit them. This can be done by changing min to -1 or 0. The color ramp used is customizable, but the example below uses a beige to a dark green color ramp.
+
 ```javascript
   Map.centerObject(YELL, 12);
   Map.addLayer(EVI_Image, {min: -1, max: 1, palette: ['EBDED4', '0A2003']}, "EVI" );
   //Map.addLayer(EVI_Image, {min: 0, max: 1, palette: ['EBDED4', '0A2003']}, "EVI" );
 ```
-The final image should look like this (I kept negetive values in mine)
+The final image should look like this (includes negative values).
 
 ![alt text](https://github.com/Lukas-Straube/NEON_Internship_Public/blob/master/Yellowstone/Images/YELL%20EVI.PNG)
 
