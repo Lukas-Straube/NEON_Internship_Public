@@ -15,28 +15,20 @@ Objectives
 
 Requirements
 ---
-- Access to GEE software (Accounts require an @gmail.com email address)
-- A NEON image to work with (Can be a subset image)
+-	Access to GEE software (accounts require a @gmail.com email address)
+-	A NEON image to work with (may be a subset of an image)
+When working with images from NEON it is import to understand what you want to see and do. Important questions to ask yourself are: What image visualization style do I want, and which wavelengths will accentuate the features I want to see. In this tutorial we will be using a flight line subset from the Wind River Experimental Forest (WREF) site.
+We'll start with importing the image to a GEE workspace. This can be done in two ways:
+1.	Directly as seen below, given you have the path to the image
+2.	By searching for the image at the top of the GEE workspace in the Search places and datasets... and clicking import
 
-When working with images from NEON it is import to understand what you want to see and do. Important questions to ask yourself are; What image visualization style do I want, Which wavelengths of light will accentuate what I want to see, and other like those.
-In this tutorial we will be using a flight line subset from the WREF site.
-  
-We'll start with just importing the image to a GEE workspace, this can be done in two ways:
-
-1. Directly as seen below, given you have the path to the image
-2. By searching for the image at the top of the GEE workspace in the `Search places and datasets...` and clicking import
 ```javascript
 var WREF_171004 = ee.Image("users/jnmusinsky/NIS_Images/171004_subset4");
 ```
-To place the image into the GEE scene is done by adding a layer to the Google Map you see taking up half the scene. To add a new layer is very easy to do. 
-
+Adding a new layer to the map window is very easy to do. 
 The variables that you see below are:
-
-min, max, bands
-
-Which make up what is called visParams or Visual Parameters, there are more of these parameters which can allow you achieve your desired visual effect. There is a benefit in tweaking these however, for the sake of simplicity we will skip these. 
-
-[gain, bias, gamma, palette, opacity, format] If you want to learn about these click [here](https://developers.google.com/earth-engine/image_visualization).
+  -min, max, bands
+These make up what are called Visualization Parameters that allow you to achieve your desired visual effect. We will assign them to a new variable called visParams.
 ```javascript
 var visParams = {
 min: 1, 
